@@ -31,7 +31,10 @@ func init() {
 }
 
 func main() {
+	getSplintTask()
+}
 
+func getSplintTask() {
 	req, err := http.NewRequest(http.MethodGet, user.requestUrl, nil)
 	if err != nil {
 		log.Println(err)
