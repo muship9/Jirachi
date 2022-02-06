@@ -9,22 +9,36 @@ import (
 	"os"
 )
 
-func main() {
+type User struct {
+	name       string
+	password   string
+	requestUrl string
+}
+
+var user User
+
+func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		fmt.Printf("読み込み出来ませんでした: %v", err)
+		log.Println("envの読み込みに失敗しました。")
 	}
-	user := os.Getenv("USER_NAME")
-	password := os.Getenv("PASSWORD")
-	requestUrl := os.Getenv("BASE_URL")
+	user = User{
+		name:       os.Getenv("USER_NAME"),
+		password:   os.Getenv("PASSWORD"),
+		requestUrl: os.Getenv("BASE_URL"),
+	}
 
-	req, err := http.NewRequest(http.MethodGet, requestUrl, nil)
+}
+
+func main() {
+
+	req, err := http.NewRequest(http.MethodGet, user.requestUrl, nil)
 	if err != nil {
 		log.Println(err)
 	}
 
 	// 認証情報を付与し、リクエストと一緒に送る
-	req.SetBasicAuth(user, password)
+	req.SetBasicAuth(user.name, user.password)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Println(err)
