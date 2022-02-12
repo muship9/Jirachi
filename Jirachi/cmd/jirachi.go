@@ -1,4 +1,4 @@
-package jirachi
+package cmd
 
 import (
 	"fmt"

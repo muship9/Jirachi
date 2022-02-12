@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"Jirachi/jirachi"
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
                 love by spf13 and friends in Go.
                 Complete documentation is available at http://hugo.spf13.com`,
 	Run: func(cmd *cobra.Command, args []string) {
-		jirachi.GetSplintTask()
+		GetSplintTask()
 	},
 }
 
@@ -23,4 +23,8 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
