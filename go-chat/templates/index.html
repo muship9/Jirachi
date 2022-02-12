@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>チャット</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main-content">
+<h1>チャット</h1>
+<div class="chat-content">
+        <p>ここに送信された文字を表示するよ</p>
+        <p>{{.Time.Format "2006/1/2 15:04:05"}}</p>
+</div>
+<form>
+    <input type="text" id="text-form" value="">
+    <input type="button" value="送信" onclick="buttonClick()">
+</form>
+</div>
+<script>
+
+    const socket = new WebSocket("ws://localhost:8080/room")
+
+    const buttonClick = () => {
+        console.log(socket)
+        const sendText = document.getElementById("text-form").value
+        if(!socket) {
+            console.log("接続されていません")
+        }else{
+            if(socket.CONNECTING === 0) {
+                return console.log("誰もいないよ")
+            }
+
+            //    TODO : socketServerとの接続を行い、取得できたテキストとユーザー識別子をgoに渡す
+            socket.send(sendText)
+        }
+        socket.onmessage = function (e) {
+            const receiveMessage = document.createElement("p")
+            receiveMessage.appendChild(e.data)
+        }
+    }
+</script>
+</body>
+</html>
