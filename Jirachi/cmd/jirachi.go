@@ -3,9 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/joho/godotenv"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -30,9 +28,14 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		GetSplintTask()
-	},
-}
+		process := args[0]
+		switch process {
+		case "task":
+			GetTask(user)
+		default:
+			fmt.Println("Sorry , I have no tasks to show")
+		}
+	}}
 
 func init() {
 	rootCmd.AddCommand(jirachiCmd)
@@ -46,23 +49,4 @@ func init() {
 		password:   os.Getenv("PASSWORD"),
 		requestUrl: os.Getenv("BASE_URL"),
 	}
-}
-
-func GetSplintTask() {
-	req, err := http.NewRequest(http.MethodGet, user.requestUrl, nil)
-	if err != nil {
-		log.Println(err)
-	}
-
-	// 認証情報を付与し、リクエストと一緒に送る
-	req.SetBasicAuth(user.name, user.password)
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		log.Println(err)
-	}
-
-	// レスポンスボディをすべて読み出す
-	body, _ := ioutil.ReadAll(resp.Body)
-	// body は []byte
-	fmt.Println(string(body))
 }
