@@ -24,3 +24,8 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(showCmd)
 }
+
+// []byteを見やすいように整える
+func ConsistencyTasks(res []byte) {
+	fmt.Println(string(res))
+}

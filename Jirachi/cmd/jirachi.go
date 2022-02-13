@@ -32,8 +32,11 @@ to quickly create a Cobra application.`,
 		switch process {
 		case "task":
 			GetTask(user)
-		default:
+		case "show":
 			fmt.Println("Sorry , I have no tasks to show")
+		default:
+			// TODO : cmd一覧を表示するようにしたい
+			fmt.Println("Sorry ,Invalid command")
 		}
 	}}
 
