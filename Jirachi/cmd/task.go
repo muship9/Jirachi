@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -18,9 +17,5 @@ func GetTask(user User) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	// レスポンスボディをすべて読み出す
-	body, _ := ioutil.ReadAll(resp.Body)
-	// body は []byte
-	ConsistencyTasks(body)
+	ConsistencyTasks(resp, err)
 }
