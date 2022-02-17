@@ -3,6 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/fatih/color"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -40,10 +41,13 @@ func ConsistencyTasks(resp *http.Response, err error) {
 		log.Println("unmarshall error")
 	}
 	for i := 0; i < len(tasks.Issues); i++ {
-		fmt.Printf("\n")
 		replaceStatus1 := strings.Replace(tasks.Issues[i].Fields.Status.Status, "{", "", -1)
 		replaceStatus2 := strings.Replace(replaceStatus1, "}", "", -1)
-		fmt.Println(tasks.Issues[i].ID, tasks.Issues[i].Fields.Name, tasks.Issues[i].Fields.Goal, replaceStatus2)
+		fmt.Printf("\n")
+		color.Red(tasks.Issues[i].ID)
+		color.Magenta(replaceStatus2)
+		fmt.Println(tasks.Issues[i].Fields.Name)
+		fmt.Println(tasks.Issues[i].Fields.Goal)
 		fmt.Printf("\n")
 	}
 }
