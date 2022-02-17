@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type IssueList struct {
@@ -38,5 +39,11 @@ func ConsistencyTasks(resp *http.Response, err error) {
 	if err != nil {
 		log.Println("unmarshall error")
 	}
-	fmt.Printf("\n\n", tasks)
+	for i := 0; i < len(tasks.Issues); i++ {
+		fmt.Printf("\n")
+		replaceStatus1 := strings.Replace(tasks.Issues[i].Fields.Status.Status, "{", "", -1)
+		replaceStatus2 := strings.Replace(replaceStatus1, "}", "", -1)
+		fmt.Println(tasks.Issues[i].ID, tasks.Issues[i].Fields.Name, tasks.Issues[i].Fields.Goal, replaceStatus2)
+		fmt.Printf("\n")
+	}
 }
