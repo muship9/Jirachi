@@ -36,8 +36,7 @@ to quickly create a Cobra application.`,
 			fmt.Println("Sorry , I have no tasks to show")
 		// TODO : taskIdのステータス移動cmdを実行
 		case "move":
-			fmt.Println(args[1])
-			fmt.Println(args[2])
+			IssueStatusMove(args[1], args[2])
 		default:
 			// TODO : cmd一覧を表示するようにしたい
 			fmt.Println("Sorry ,Invalid command")
