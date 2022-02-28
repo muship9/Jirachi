@@ -3,11 +3,12 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fatih/color"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 type IssueList struct {
@@ -32,6 +33,7 @@ type StatusName struct {
 func ConsistencyTasks(resp *http.Response, err error) {
 	// レスポンスボディをすべて読み出す
 	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(body)
 	// 配列の作成
 	tasks := IssueList{}
 	//tasks := make([]*Issues , 0)
